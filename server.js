@@ -16,10 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── MySQL Connection Pool ────────────────────────────────────────────────────
 const pool = mysql2.createPool({
-  host:     process.env.DB_HOST     || 'localhost',
-  user:     process.env.DB_USER     || 'root',
-  password: process.env.DB_PASSWORD || 'tiger',
-  database: process.env.DB_NAME     || 'belwin_db',
+  host:     process.env.MYSQLHOST     || process.env.DB_HOST     || 'localhost',
+  user:     process.env.MYSQLUSER     || process.env.DB_USER     || 'root',
+  password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || 'tiger',
+  database: process.env.MYSQLDATABASE || process.env.DB_NAME     || 'belwin_db',
+  port:     process.env.MYSQLPORT     || 3306,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -157,7 +158,11 @@ app.get('*', (req, res) => {
 });
 
 // ─── Start Server ─────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n🍽️  Belwin Breakfast Center server is running!`);
-  console.log(`🌐  Open:  http://localhost:${PORT}\n`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`\n🍽️  Belwin Breakfast Center server is running!`);
+    console.log(`🌐  Open:  http://localhost:${PORT}\n`);
+  });
+}
+
+module.exports = app;
