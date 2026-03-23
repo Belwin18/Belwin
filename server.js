@@ -21,6 +21,7 @@ const pool = mysql2.createPool({
   password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || 'tiger',
   database: process.env.MYSQLDATABASE || process.env.DB_NAME     || 'belwin_db',
   port:     process.env.MYSQLPORT     || 3306,
+  timezone: '+05:30', // Ensure session time is IST
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

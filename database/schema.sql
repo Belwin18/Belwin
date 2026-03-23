@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   image_url   VARCHAR(500)   NOT NULL,
   category    VARCHAR(50)    NOT NULL DEFAULT 'food',
   is_available TINYINT(1)    NOT NULL DEFAULT 1,
-  created_at  TIMESTAMP      DEFAULT CURRENT_TIMESTAMP
+  created_at  DATETIME       DEFAULT (CONVERT_TZ(NOW(), 'UTC', '+05:30'))
 );
 
 -- ─── Orders ──────────────────────────────────
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS orders (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   customer_name   VARCHAR(100)  NOT NULL DEFAULT 'Guest',
   total_amount    DECIMAL(10,2) NOT NULL,
-  status          ENUM('pending','paid','cancelled') NOT NULL DEFAULT 'pending',
-  created_at      TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+  status          ENUM('pending','paid','cancelled') NOT NULL DEFAULT 'paid',
+  created_at      DATETIME      DEFAULT (CONVERT_TZ(NOW(), 'UTC', '+05:30'))
 );
 
 -- ─── Order Items ─────────────────────────────
@@ -96,3 +96,6 @@ INSERT INTO menu_items (name, description, price, image_url, category) VALUES
  25.00,
  'https://images.unsplash.com/photo-1758387941825-a6ecaec9c14d?q=80&w=600&auto=format&fit=crop',
  'beverage');
+
+-- Test Query (uncomment if needed)
+-- SELECT id,customer_name,total_amount,status,created_at AS ist_time FROM orders;
