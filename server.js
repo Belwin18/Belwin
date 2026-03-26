@@ -79,11 +79,18 @@ app.post('/api/orders', async (req, res) => {
       0
     );
 
+    // Generate precise IST Time
+    const now = new Date();
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const istTime = new Date(now.getTime() + istOffset);
+    const formattedIstDatetime = istTime.toISOString().slice(0, 19).replace('T', ' ');
+
     // Insert order
     const [orderResult] = await conn.query(
-      'INSERT INTO orders (customer_name, total_amount, status) VALUES (?, ?, ?)',
-      [customer_name || 'Guest', total_amount, 'pending']
+      'INSERT INTO orders (customer_name, total_amount, status, created_at) VALUES (?, ?, ?, ?)',
+      [customer_name || 'Guest', total_amount, 'pending', formattedIstDatetime]
     );
+
     const order_id = orderResult.insertId;
 
     // Insert order items
