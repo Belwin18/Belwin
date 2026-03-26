@@ -16,8 +16,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   price       DECIMAL(10,2)  NOT NULL,
   image_url   VARCHAR(500)   NOT NULL,
   category    VARCHAR(50)    NOT NULL DEFAULT 'food',
-  is_available TINYINT(1)    NOT NULL DEFAULT 1,
-  created_at  DATETIME       DEFAULT (CONVERT_TZ(NOW(), 'UTC', '+05:30'))
+  created_at  DATETIME       DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ─── Orders ──────────────────────────────────
@@ -25,8 +24,7 @@ CREATE TABLE IF NOT EXISTS orders (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   customer_name   VARCHAR(100)  NOT NULL DEFAULT 'Guest',
   total_amount    DECIMAL(10,2) NOT NULL,
-  status          ENUM('pending','paid','cancelled') NOT NULL DEFAULT 'paid',
-  created_at      DATETIME      DEFAULT (CONVERT_TZ(NOW(), 'UTC', '+05:30'))
+  created_at      DATETIME      DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ─── Order Items ─────────────────────────────
