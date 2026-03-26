@@ -29,11 +29,12 @@ const pool = mysql2.createPool({
 
 const db = pool.promise();
 
-// ─── Test DB connection on startup ────────────────────────────────────────────
+// ─── Test DB connection and Timezone on startup ────────────────────────────────
 (async () => {
   try {
-    await db.query('SELECT 1');
+    const [rows] = await db.query('SELECT @@session.time_zone AS tz, NOW() AS local_time');
     console.log('✅  MySQL connected to database: ' + (process.env.DB_NAME || 'belwin_db'));
+    console.log(`🕒  Database session timezone: ${rows[0].tz} | Current Time: ${rows[0].local_time}`);
   } catch (err) {
     console.error('❌  MySQL connection failed:', err.message);
     console.error('    Make sure MySQL is running and .env is configured correctly.');
