@@ -20,9 +20,10 @@ const mysql = require('mysql2/promise');
 
     // Update orders table
     const [result] = await conn.query(
-      "UPDATE orders SET created_at = DATE_ADD(created_at, INTERVAL '5:30' HOUR_MINUTE)"
+      "UPDATE orders SET created_at = DATE_ADD(created_at, INTERVAL 5 HOUR + 30 MINUTE)"
     );
-    console.log(`✅  Updated ${result.affectedRows} orders to IST.`);
+    console.log(`✅  Successfully shifted ${result.affectedRows} orders from UTC to IST (+05:30).`);
+
 
     // Update menu_items table if needed
     const [menuResult] = await conn.query(

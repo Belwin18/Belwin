@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
+process.env.TZ = 'Asia/Kolkata'; // Force IST timezone globally in Node.js
 
 const app = express();
 const PORT = process.env.PORT || 3000;
