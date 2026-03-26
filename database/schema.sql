@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS menu_items (
   created_at  DATETIME       DEFAULT CURRENT_TIMESTAMP
 );
 
--- ─── Orders (Timestamps handled in IST +05:30) ──────────
+-- ─── Orders (Date only in IST +05:30) ────────────────────
 CREATE TABLE IF NOT EXISTS orders (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   customer_name   VARCHAR(100)  NOT NULL DEFAULT 'Guest',
   total_amount    DECIMAL(10,2) NOT NULL,
   status          VARCHAR(20)   NOT NULL DEFAULT 'pending',
-  created_at      DATETIME      DEFAULT CURRENT_TIMESTAMP
+  created_at      DATE          DEFAULT (CURRENT_DATE)
 );
 
 -- ─── Order Items ─────────────────────────────
